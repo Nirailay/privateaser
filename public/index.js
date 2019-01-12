@@ -158,7 +158,11 @@ function setPrice(bars,events){
 		pricePersonn=bars[pas2].pricePerPerson;
 			}
 		}
-	events[pas].price=events[pas].time*priceHour+events[pas].persons*pricePersonn;
+		if(events[pas].persons>9 && events[pas].persons<20) events[pas].price=events[pas].time*priceHour+events[pas].persons*pricePersonn*0.90;
+		else if(events[pas].persons>19 && events[pas].persons<60) events[pas].price=events[pas].time*priceHour+events[pas].persons*pricePersonn*0.70;
+		else if(events[pas].persons>59 ) events[pas].price=events[pas].time*priceHour+events[pas].persons*pricePersonn*0.50;
+		else events[pas].price=events[pas].time*priceHour+events[pas].persons*pricePersonn;
+	
 	}
 }
 setPrice(bars, events);
