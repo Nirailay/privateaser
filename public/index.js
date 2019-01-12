@@ -165,7 +165,20 @@ function setPrice(bars,events){
 	
 	}
 }
+
+function setCommission(events){
+	var i,comm;
+	for (i=0;i<events.length;i++){
+		comm=events[i].price*0.30;
+		comm=comm/2;
+		events[i].commission.insurance=comm;
+		events[i].commission.treasury=events[i].persons;
+		comm=comm-events[i].persons;
+		events[i].commission.privateaser=comm;
+	}
+}
 setPrice(bars, events);
+setCommission(events);
 console.log(bars);
 console.log(events);
 console.log(actors);
