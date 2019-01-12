@@ -177,7 +177,15 @@ function setCommission(events){
 		events[i].commission.privateaser=comm;
 	}
 }
+
+function ifDeductible(events){
+	var i,comm;
+	for (i=0;i<events.length;i++){
+		if(events[i].options.deductibleReduction) events[i].price=events[i].price+events[i].persons;
+	}
+}
 setPrice(bars, events);
+ifDeductible(events);
 setCommission(events);
 console.log(bars);
 console.log(events);
