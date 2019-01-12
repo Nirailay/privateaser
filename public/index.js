@@ -179,14 +179,37 @@ function setCommission(events){
 }
 
 function ifDeductible(events){
-	var i,comm;
+	var i;
 	for (i=0;i<events.length;i++){
 		if(events[i].options.deductibleReduction) events[i].price=events[i].price+events[i].persons;
 	}
 }
+
+function actorsPayement(events, actors){
+	var i,comm,commInsurance,commTreasury,commPrivateam,bookerDebit;
+	for (i=0;i<events.length;i++){
+		comm=events[i].price*0.30;
+		commInsurance=comm/2;
+		commTreasury=events[i].persons;
+		commPrivateam=commInsurance-events[i].persons;
+		if(events[i].options.deductibleReduction) bookerDebit=events[i].price+events[i].persons;
+		else bookerDebit=events[i].price;
+		
+		actors[i].payment[0].amount=bookerDebit;
+		actors[i].payment[1].amount=events[i].price-comm;
+		actors[i].payment[2].amount=commInsurance;
+		actors[i].payment[3].amount=commTreasury;
+		if(events[i].options.deductibleReduction) actors[i].payment[4].amount=commPrivateam+events[i].persons;
+		else actors[i].payment[4].amount=commPrivateam;
+		
+		
+	}
+}
+
 setPrice(bars, events);
-ifDeductible(events);
+actorsPayement(events,actors);
 setCommission(events);
+ifDeductible(events);
 console.log(bars);
 console.log(events);
 console.log(actors);
